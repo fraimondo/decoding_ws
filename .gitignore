@@ -16,3 +16,5 @@ wheels/
 *.png
 *.gif
 .DS_Store
+
+scratch/

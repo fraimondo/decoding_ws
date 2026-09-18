@@ -1,9 +1,9 @@
 # %%
-import seaborn as sns
 import matplotlib.pyplot as plt
-from sklearn.linear_model import LinearRegression, LogisticRegression
 import numpy as np
+import seaborn as sns
 from scipy.special import expit
+from sklearn.linear_model import LinearRegression, LogisticRegression
 
 # %% Load data
 cars = sns.load_dataset("mpg")
@@ -76,8 +76,12 @@ ani = FuncAnimation(
 ani.save("weight_vs_mpg_regression.gif", writer="ffmpeg", fps=0.7, dpi=300)
 
 # %% Now the logistic regression
-short_cars = cars.sample(n=30, random_state=42)  # reample so we see some overlap
-short_cars["cyl_bin"] = short_cars["cylinders"].apply(lambda x: "8" if x > 4 else "4/6")
+short_cars = cars.sample(
+    n=30, random_state=42
+)  # reample so we see some overlap
+short_cars["cyl_bin"] = short_cars["cylinders"].apply(
+    lambda x: "8" if x > 4 else "4/6"
+)
 fig, ax = plt.subplots(1, 1, figsize=(4, 4))
 sns.swarmplot(x="cyl_bin", y="weight", data=short_cars, ax=ax, hue="cyl_bin")
 ax.set_ylabel("Weight")
@@ -86,7 +90,14 @@ fig.subplots_adjust(left=0.2)
 fig.savefig("weight_vs_cylinders_swarm.png")
 
 fig, ax = plt.subplots(1, 1, figsize=(4, 4))
-sns.swarmplot(y="cyl_bin", x="weight", data=short_cars, ax=ax, hue="cyl_bin", order=["8", "4/6"])
+sns.swarmplot(
+    y="cyl_bin",
+    x="weight",
+    data=short_cars,
+    ax=ax,
+    hue="cyl_bin",
+    order=["8", "4/6"],
+)
 ax.set_xlabel("Weight")
 ax.set_ylabel("Cylinders")
 fig.subplots_adjust(left=0.2)
@@ -94,7 +105,9 @@ fig.savefig("weight_vs_cylinders_swarm_trans.png")
 
 # %%
 fig, ax = plt.subplots(1, 1, figsize=(5, 5))
-g = sns.scatterplot(data=short_cars, x="weight", y="cyl_bin", ax=ax, hue="cyl_bin", legend=True)
+g = sns.scatterplot(
+    data=short_cars, x="weight", y="cyl_bin", ax=ax, hue="cyl_bin", legend=True
+)
 g.legend_.set_title("Cylinders")
 ax.invert_yaxis()
 model = LogisticRegression()

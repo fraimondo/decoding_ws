@@ -1,25 +1,28 @@
 # %%
-import seaborn as sns
 import matplotlib.pyplot as plt
-from sklearn.linear_model import LinearRegression
-from sklearn.preprocessing import PolynomialFeatures, SplineTransformer
-from sklearn.pipeline import make_pipeline
-from sklearn.metrics import mean_absolute_error
 import numpy as np
+import seaborn as sns
+from sklearn.linear_model import LinearRegression
+from sklearn.metrics import mean_absolute_error
+from sklearn.pipeline import make_pipeline
+from sklearn.preprocessing import SplineTransformer
 
 # %% Load data
 np.random.seed(20)
 cars = sns.load_dataset("mpg")
 short_cars = cars.sample(n=50, random_state=42)
-short_cars["set"] = ["train" if x == 1 else "test" for x in np.random.randint(0, 2, 50)]
+short_cars["set"] = [
+    "train" if x == 1 else "test" for x in np.random.randint(0, 2, 50)
+]
 short_cars_train = short_cars[short_cars["set"] == "train"]
 short_cars_test = short_cars[short_cars["set"] == "test"]
 
-## %% Train a spline model
+# %% Train a spline model
 spl = SplineTransformer(degree=30, n_knots=10)
 model = make_pipeline(spl, LinearRegression())
 model.fit(short_cars_train[["weight"]], short_cars_train["mpg"])
 y_pred_train = model.predict(short_cars_train[["weight"]])
+
 # %% Plot weight vs mpg
 fig, ax = plt.subplots(1, 1, figsize=(5, 5))
 sns.scatterplot(data=short_cars_train, x="weight", y="mpg", ax=ax)
