@@ -10,6 +10,8 @@ dependencies = [
     "julearn>=0.3.5",
     "mne>=1.13.2",
     "seaborn>=0.13.2",
+    "shap>=0.52.0",
+    "xgboost>=3.4.1",
 ]
 
 [tool.ruff]

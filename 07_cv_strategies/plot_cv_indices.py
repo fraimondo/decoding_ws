@@ -213,7 +213,7 @@ for cv in cvs:
     # Make the legend fit
     plt.tight_layout()
 
-# %%
+# %%        
 # Next we'll visualize this behavior for a number of CV iterators.
 #
 # Visualize cross-validation indices for many CV objects
